@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
       className="min-h-screen flex flex-col justify-center items-center text-center bg-cover bg-center relative" 
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="absolute inset-0 bg-black opacity-20"></div>
+      <div className="absolute inset-0 bg-black opacity-50"></div>
 
       <div className="relative z-10 text-white px-4">
         {/* <h1 className="text-8xl font-bold mb-8">Welcome to Code World</h1> */}
@@ -16,7 +16,7 @@ const Hero: React.FC = () => {
           An easier way to organise and track your projects & collaborate with your team as well as personal progress.
         </p>
         <a 
-          href="#" 
+          href="/login" 
           className="bg-cards hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300"
         >
           Get Started
