@@ -1,17 +1,27 @@
-// components/CreateProjectForm.tsx
-import React, { useState } from 'react';
+// components/UpdateProjectForm.tsx
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import projectsApi from '../features/projects/projectsAPI';
 
-const CreateProjectForm: React.FC = () => {
-  const [createProject, { isLoading }] = projectsApi.useCreateProjectMutation();
+const UpdateProjectForm: React.FC = () => {
+  const { projectId } = useParams<{ projectId: any }>();
+  const { data: project, isLoading: isProjectLoading } = projectsApi.useGetProjectQuery(projectId);
+  const [updateProject, { isLoading: isUpdating }] = projectsApi.useUpdateProjectMutation();
+
   const [formData, setFormData] = useState({
     project_name: '',
     description: '',
-    githubRepo: '',
-    start_date: '',
-    end_date: '',
-    project_status: 'todo',
+    githubRepo: '' || null,
+    start_date: '' || null,
+    end_date: '' || null,
+    project_status: '',
   });
+
+  useEffect(() => {
+    if (project) {
+      setFormData(project);
+    }
+  }, [project]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,16 +30,18 @@ const CreateProjectForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createProject(formData).unwrap();
-      // Reset form or redirect
+      await updateProject({ id: projectId, ...formData }).unwrap();
+      // Show success message or redirect
     } catch (error) {
-      console.error('Failed to create project:', error);
+      console.error('Failed to update project:', error);
     }
   };
 
+  if (isProjectLoading) return <div>Loading project...</div>;
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold">Create New Project</h2>
+      <h2 className="text-2xl font-bold">Update Project</h2>
       <input
         type="text"
         name="project_name"
@@ -79,15 +91,16 @@ const CreateProjectForm: React.FC = () => {
         <option value="in_progress">In Progress</option>
         <option value="completed">Completed</option>
       </select>
+
       <button
         type="submit"
-        disabled={isLoading}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
+        disabled={isUpdating}
+        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:bg-green-300"
       >
-        {isLoading ? 'Creating...' : 'Create Project'}
+        {isUpdating ? 'Updating...' : 'Update Project'}
       </button>
     </form>
   );
 };
 
-export default CreateProjectForm;
+export default UpdateProjectForm;
