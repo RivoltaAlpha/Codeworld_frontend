@@ -42,3 +42,26 @@ export interface UserAuthenticatedState {
     loading: boolean;
     error: string | null;
   }
+
+  // types.ts
+export interface Task {
+  id: string;
+  title: string;
+  status: string;
+  completed: boolean;
+  icon?: string;
+}
+
+// types.ts
+export interface Project {
+  projects_id: number;
+  user_id: number;
+  project_name: string;
+  description: string;
+  githubRepo: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  project_status: 'todo' | 'in_progress' | 'completed';
+  created_at: string;
+  updated_at: string;
+}
