@@ -11,9 +11,9 @@ const UpdateProjectForm: React.FC = () => {
   const [formData, setFormData] = useState({
     project_name: '',
     description: '',
-    githubRepo: '' || null,
-    start_date: '' || null,
-    end_date: '' || null,
+    githubRepo: '' ,
+    start_date: '',
+    end_date: '' ,
     project_status: '',
   });
 
@@ -24,13 +24,22 @@ const UpdateProjectForm: React.FC = () => {
   }, [project]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateProject({ id: projectId, ...formData }).unwrap();
+      // Check if githubRepo is null, if so set it to an empty string
+      const formDataWithDefaults = {
+        ...formData,
+        githubRepo: formData.githubRepo ?? '',
+      };
+
+      await updateProject({ id: projectId, ...formDataWithDefaults }).unwrap();
       // Show success message or redirect
     } catch (error) {
       console.error('Failed to update project:', error);
