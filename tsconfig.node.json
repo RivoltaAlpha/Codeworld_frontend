@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["react-router-dom", "redux", "redux-persist"],
+    "types": ["react-router-dom", "redux", "redux-persist", "react-redux"] ,
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "skipLibCheck": true,
