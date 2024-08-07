@@ -30,6 +30,13 @@ const UpdateProjectForm: React.FC = () => {
     }));
   };
 
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData(prevState => ({
+      ...prevState,
+      project_status: e.target.value,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
