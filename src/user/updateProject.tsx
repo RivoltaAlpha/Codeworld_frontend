@@ -1,10 +1,9 @@
-// components/UpdateProjectForm.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import projectsApi from '../features/projects/projectsAPI';
 
 const UpdateProjectForm: React.FC = () => {
-  const { projectId } = useParams<{ projectId: any }>();
+  const { projectId } = useParams<{ projectId: any }>();  // Ensuring projectId is of type string
   const { data: project, isLoading: isProjectLoading } = projectsApi.useGetProjectQuery(projectId);
   const [updateProject, { isLoading: isUpdating }] = projectsApi.useUpdateProjectMutation();
 
@@ -19,7 +18,14 @@ const UpdateProjectForm: React.FC = () => {
 
   useEffect(() => {
     if (project) {
-      setFormData(project);
+      setFormData({
+        project_name: project.project_name || '',
+        description: project.description || '',
+        githubRepo: project.githubRepo || '',
+        start_date: project.start_date || '',
+        end_date: project.end_date || '',
+        project_status: project.project_status || '',
+      });
     }
   }, [project]);
 
@@ -30,26 +36,19 @@ const UpdateProjectForm: React.FC = () => {
     }));
   };
 
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData(prevState => ({
-      ...prevState,
-      project_status: e.target.value,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Check if githubRepo is null, if so set it to an empty string
       const formDataWithDefaults = {
         ...formData,
         githubRepo: formData.githubRepo ?? '',
       };
 
       await updateProject({ id: projectId, ...formDataWithDefaults }).unwrap();
-      // Show success message or redirect
+      // Add a success message or redirect logic here
     } catch (error) {
       console.error('Failed to update project:', error);
+      // Optionally handle the error by showing an error message
     }
   };
 
