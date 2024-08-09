@@ -1,10 +1,8 @@
 // features/projects/projectsSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Project } from '../../types/types';
+import { Project, ProjectsState } from '../../types/types';
 
-interface ProjectsState {
-  selectedProject: Project | null;
-}
+
 
 const initialState: ProjectsState = {
   selectedProject: null,
@@ -17,6 +15,12 @@ const projectsSlice = createSlice({
     setSelectedProject: (state, action: PayloadAction<Project | null>) => {
       state.selectedProject = action.payload;
     },
+    updateSelectedProject (state, action: PayloadAction<Project>) {
+      state.selectedProject = action.payload;
+    },
+    clearSelectedProject (state) {
+      state.selectedProject = null;
+    }
   },
 });
 
