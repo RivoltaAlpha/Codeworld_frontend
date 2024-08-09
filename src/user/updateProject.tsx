@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import projectsApi from '../features/projects/projectsAPI';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store';
 
 const UpdateProjectForm: React.FC = () => {
   const { projectId } = useParams<{ projectId: any }>();  // Ensuring projectId is of type string
+  const { projects  } = useSelector((state: RootState) => state.project);
   const { data: project, isLoading: isProjectLoading } = projectsApi.useGetProjectQuery(projectId);
   const [updateProject, { isLoading: isUpdating }] = projectsApi.useUpdateProjectMutation();
 
@@ -19,13 +22,14 @@ const UpdateProjectForm: React.FC = () => {
   useEffect(() => {
     if (project) {
       setFormData({
+        project_id: project.projects_id,
         project_name: project.project_name || '',
         description: project.description || '',
         githubRepo: project.githubRepo || '',
         start_date: project.start_date || '',
         end_date: project.end_date || '',
         project_status: project.project_status || '',
-      });
+      } as any);
     }
   }, [project]);
 
