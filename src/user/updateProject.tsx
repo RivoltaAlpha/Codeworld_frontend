@@ -38,13 +38,14 @@ const UpdateProjectForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log ('Form Data on Change:', formData); // Log form data on change
     try {
       const formDataWithDefaults = {
         ...formData,
         githubRepo: formData.githubRepo ?? '',
       };
 
-      await updateProject({ id: projectId, ...formDataWithDefaults }).unwrap();
+      await updateProject({ id: project?.projects_id, ...formDataWithDefaults }).unwrap();
       // Add a success message or redirect logic here
     } catch (error) {
       console.error('Failed to update project:', error);
