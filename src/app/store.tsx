@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { usersAPI } from "../features/users/usersAPI";
 import { registrationAPI } from "../features/register/register";
 import { loginApi } from "../features/login/loginAPI";
+import { projectsApi } from "../features/projects/projectsAPI"
 import UserAuthReducer from "../features/login/loginSlice";
 import tasksApi from "../features/tasks/tasksAPI";
 import userReducer from "../features/users/userSlice";
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   [registrationAPI.reducerPath]: registrationAPI.reducer,
   [loginApi.reducerPath]: loginApi.reducer,
   [tasksApi.reducerPath]: tasksApi.reducer,
+  [projectsApi.reducerPath]: projectsApi.reducer,
   userAuth: UserAuthReducer,
   user: userReducer,
   project: projectReducer,
@@ -46,6 +48,7 @@ const store = configureStore({
       registrationAPI.middleware,
       loginApi.middleware,
       tasksApi.middleware,
+      projectsApi.middleware,
       // Add other middleware here
     ),
 });
