@@ -23,11 +23,11 @@ export const projectsApi = createApi({
       }),
       invalidatesTags: ['Project'],
     }),
-    updateProject: builder.mutation<Project, Partial<Project> & Pick<Project, 'projects_id'>>({
-      query: ({ projects_id, ...patch }) => ({
+    updateProject: builder.mutation<Project, { projects_id: number; data: Partial<Project> }>({
+      query: ({ projects_id, data }) => ({
         url: `projects/${projects_id}`,
-        method: 'PATCH',
-        body: patch,
+        method: 'PUT',
+        body: data,
       }),
       invalidatesTags: (_result, _error, { projects_id }) => [{ type: 'Project', id: projects_id }],
     }),
