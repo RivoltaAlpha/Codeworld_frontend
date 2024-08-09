@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import projectsApi from '../features/projects/projectsAPI';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
+import { setSelectedProject, clearSelectedProject } from '../features/projects/projectSlice';
+import { Project } from '../types/types';
 
 const UpdateProjectForm: React.FC = () => {
-  const { projectId } = useParams<{ projectId: any }>();  // Ensuring projectId is of type string
-  const { projects  } = useSelector((state: RootState) => state.project);
+  const { projectId }:any = useSelector((state: RootState) => state.project.selectedProject?.projects_id);
   const { data: project, isLoading: isProjectLoading } = projectsApi.useGetProjectQuery(projectId);
   const [updateProject, { isLoading: isUpdating }] = projectsApi.useUpdateProjectMutation();
+  const storedProject = localStorage.getItem('selectedProject');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedProject = JSON.parse(localStorage.getItem('selectedProject') || '{}');
+    setFormData(storedProject);
+    dispatch(setSelectedProject(storedProject))
+  }, [dispatch]);
 
   const [formData, setFormData] = useState({
     project_name: '',
@@ -16,22 +26,9 @@ const UpdateProjectForm: React.FC = () => {
     githubRepo: '' ,
     start_date: '',
     end_date: '' ,
-    project_status: '',
+    project_status: 'todo' || 'in_progress' || 'completed',
   });
 
-  useEffect(() => {
-    if (project) {
-      setFormData({
-        project_id: project.projects_id,
-        project_name: project.project_name || '',
-        description: project.description || '',
-        githubRepo: project.githubRepo || '',
-        start_date: project.start_date || '',
-        end_date: project.end_date || '',
-        project_status: project.project_status || '',
-      } as any);
-    }
-  }, [project]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prevState => ({
@@ -42,21 +39,22 @@ const UpdateProjectForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log ('Form Data on Change:', formData); // Log form data on change
+    console.log('Form Data on Change:', formData); // Log form data on change
     try {
-      const formDataWithDefaults = {
+      const ProjectUpdate = JSON.parse(storedProject || '{}');
+      const data: Partial<Project> = {
         ...formData,
-        githubRepo: formData.githubRepo ?? '',
+        project_status: formData.project_status as "completed" | "todo" | "in_progress",
       };
-
-      await updateProject({ id: project?.projects_id, ...formDataWithDefaults }).unwrap();
-      // Add a success message or redirect logic here
+      await updateProject({ projects_id: ProjectUpdate.projects_id, data }).unwrap();
+      console.log('API response:', project);
+      dispatch(clearSelectedProject());
+      navigate('/users/dashboard');
     } catch (error) {
       console.error('Failed to update project:', error);
       // Optionally handle the error by showing an error message
     }
   };
-
   if (isProjectLoading) return <div>Loading project...</div>;
 
   return (
