@@ -1,34 +1,41 @@
+// src/features/users/userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserState, TUser } from '../../types/types';
-// import { usersAPI}  from './usersAPI'; // Assuming your user service handles database operations
-// import { Dispatch } from 'redux';
+import { UserAuthenticatedState } from '../../types/types';
+import { TUser } from '../../types/types';
 
-
-const initialState: UserState = {
-  user: null,
+const initialState: UserAuthenticatedState = {
+  user: JSON.parse(localStorage.getItem('user') || 'null'),
+  token: localStorage.getItem('token') || null,
+  isAuthenticated: !!localStorage.getItem('token'),
   loading: false,
   error: null,
+
 };
 
-const userSlice = createSlice({
-  name: 'user',
+const userAuthenticationSlice = createSlice({
+  name: 'authUser',
   initialState,
   reducers: {
-    updateUserStart(state) {
-      state.loading = true;
-      state.error = null;
+    setUserData:(state, action: PayloadAction<{user: TUser; token: string}>) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isAuthenticated = true;
+      localStorage.setItem('user', JSON.stringify(action.payload.user));
+      localStorage.setItem('token', action.payload.token);
     },
-    updateUserSuccess(state, action: PayloadAction<TUser>) {
+    setUserDetails: (state, action: PayloadAction<TUser>) => {
       state.user = action.payload;
-      state.loading = false;
-      state.error = null;
+      localStorage.setItem('user', JSON.stringify(action.payload));
     },
-    updateUserFailure(state, action: PayloadAction<string>) {
-      state.loading = false;
-      state.error = action.payload;
+    clearUser(state) {
+      state.user = null;
+      state.token = null;
+      state.isAuthenticated = false;
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
     },
   },
 });
 
-export const { updateUserStart, updateUserSuccess, updateUserFailure } = userSlice.actions;
-export default userSlice.reducer;
+export const { setUserData, setUserDetails, clearUser } = userAuthenticationSlice.actions;
+export default userAuthenticationSlice.reducer;
