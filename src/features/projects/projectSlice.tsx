@@ -24,5 +24,5 @@ const projectsSlice = createSlice({
   },
 });
 
-export const { setSelectedProject } = projectsSlice.actions;
+export const { setSelectedProject, updateSelectedProject, clearSelectedProject } = projectsSlice.actions;
 export default projectsSlice.reducer;
