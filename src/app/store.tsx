@@ -7,6 +7,7 @@ import { registrationAPI } from "../features/register/register";
 import { loginApi } from "../features/login/loginAPI";
 import UserAuthReducer from "../features/login/loginSlice";
 import tasksApi from "../features/tasks/tasksAPI";
+import userReducer from "../features/users/userSlice";
 
 
 const persistConfig = {
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   [loginApi.reducerPath]: loginApi.reducer,
   [tasksApi.reducerPath]: tasksApi.reducer,
   userAuth: UserAuthReducer,
+  user: userReducer,
   // Add other reducers here
 });
 
