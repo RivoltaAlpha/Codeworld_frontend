@@ -1,17 +1,24 @@
 // components/CreateProjectForm.tsx
 import React, { useState } from 'react';
 import projectsApi from '../features/projects/projectsAPI';
+import { RootState } from '../app/store';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast, Toaster } from 'sonner';
 
 const CreateProjectForm: React.FC = () => {
+  const { user } = useSelector((state: RootState) => state.userAuth);
   const [createProject, { isLoading }] = projectsApi.useCreateProjectMutation();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    user_id: user?.user_id || 0,
     project_name: '',
     description: '',
     githubRepo: '',
     start_date: '',
     end_date: '',
     project_status: 'todo',
-  });
+  } as any);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,13 +28,25 @@ const CreateProjectForm: React.FC = () => {
     e.preventDefault();
     try {
       await createProject(formData).unwrap();
-      // Reset form or redirect
+      toast.success('Booking successful');
+      navigate('/users/dashboard');
     } catch (error) {
       console.error('Failed to create project:', error);
     }
   };
 
   return (
+    <div className="max-w-2xl mx-auto mt-10 p-6 text-white tecy shadow-lg rounded-lg">
+    <Toaster
+        toastOptions={{
+          classNames: {
+            error: "bg-red-400",
+            success: "text-green-400",
+            warning: "text-yellow-400",
+            info: "bg-blue-400",
+          },
+        }}
+      />
     <form onSubmit={handleSubmit} className="space-y-4">
       <h2 className="text-2xl font-bold">Create New Project</h2>
       <input
@@ -87,6 +106,7 @@ const CreateProjectForm: React.FC = () => {
         {isLoading ? 'Creating...' : 'Create Project'}
       </button>
     </form>
+  </div>
   );
 };
 
