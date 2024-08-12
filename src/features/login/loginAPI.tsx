@@ -3,7 +3,7 @@ import { LoginResponse } from '../../types/types';
 
 export const loginApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https:/localhost/8000/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000' }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (user: LoginResponse) => ({
