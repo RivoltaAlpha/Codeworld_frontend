@@ -4,20 +4,20 @@ import { Project } from '../../types/types';
 
 export const projectsApi = createApi({
   reducerPath: 'projectsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000' }),
   tagTypes: ['Project'],
   endpoints: (builder) => ({
     getUserProjects: builder.query<Project[], void>({
-      query: () => 'projects',
+      query: ( user_id) => `/user-projects/${user_id}`,
       providesTags: ['Project'],
     }),
     getProject: builder.query<Project, string>({
-      query: (id) => `projects/${id}`,
+      query: (id) => `/projects/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'Project', id }],
     }),
     createProject: builder.mutation<Project, Partial<Project>>({
       query: (newProject) => ({
-        url: 'projects',
+        url: '/project',
         method: 'POST',
         body: newProject,
       }),
@@ -25,7 +25,7 @@ export const projectsApi = createApi({
     }),
     updateProject: builder.mutation<Project, { projects_id: number; data: Partial<Project> }>({
       query: ({ projects_id, data }) => ({
-        url: `projects/${projects_id}`,
+        url: `/projects/${projects_id}`,
         method: 'PUT',
         body: data,
       }),
@@ -33,7 +33,7 @@ export const projectsApi = createApi({
     }),
     deleteProject: builder.mutation<{ success: boolean; id: number }, number>({
       query: (id) => ({
-        url: `projects/${id}`,
+        url: `/projects/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Project'],
