@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import loginPic from "../../public/login.png";
+import loginPic from "/login.png";
 import { Toaster, toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { RootState } from "../app/store";
@@ -28,7 +28,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated && user.role === "user") {
-        navigate("/users/dashboard");
+        navigate("/dashboard");
       }
   }, [isAuthenticated, navigate]);
 
@@ -50,12 +50,7 @@ export const Login = () => {
         position: "bottom-center",
       });
 
-            // Navigate based on the user's role
-            if (response.user.role === "admin") {
-              navigate("/admin-dashboard");
-            } else {
-              navigate("/users-dashboard");
-            }
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error logging in:", error);
       toast.error("Invalid username or password");
