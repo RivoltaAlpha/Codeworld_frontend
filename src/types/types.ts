@@ -54,7 +54,7 @@ export interface Task {
 
 // types.ts
 export interface Project {
-  projects_id: number;
+  project_id: number;
   user_id: number;
   project_name: string;
   description: string;
@@ -66,6 +66,10 @@ export interface Project {
   updated_at: string;
 }
 
+export interface projectDetails {
+  project : Project;
+  tasks: Task;
+}
 
 export interface ProjectsState {
   selectedProject: Project | null;
