@@ -7,9 +7,9 @@ import { registrationAPI } from "../features/register/register";
 import { loginApi } from "../features/login/loginAPI";
 import { projectsApi } from "../features/projects/projectsAPI"
 import UserAuthReducer from "../features/login/loginSlice";
-import tasksApi from "../features/tasks/tasksAPI";
 import userReducer from "../features/users/userSlice";
 import projectReducer from "../features/projects/projectSlice"
+import { tasksAPI } from "../features/tasks/tasksAPI";
 
 
 const persistConfig = {
@@ -27,8 +27,8 @@ const rootReducer = combineReducers({
   [usersAPI.reducerPath]: usersAPI.reducer,
   [registrationAPI.reducerPath]: registrationAPI.reducer,
   [loginApi.reducerPath]: loginApi.reducer,
-  [tasksApi.reducerPath]: tasksApi.reducer,
   [projectsApi.reducerPath]: projectsApi.reducer,
+  [tasksAPI.reducerPath]: tasksAPI.reducer,
   userAuth: UserAuthReducer,
   user: userReducer,
   project: projectReducer,
@@ -47,8 +47,8 @@ const store = configureStore({
       usersAPI.middleware,
       registrationAPI.middleware,
       loginApi.middleware,
-      tasksApi.middleware,
       projectsApi.middleware,
+      tasksAPI.middleware
       // Add other middleware here
     ),
 });
