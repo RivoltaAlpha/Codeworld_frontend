@@ -1,16 +1,18 @@
 import React from 'react';
 import projectsApi from '../features/projects/projectsAPI';
+import { Project } from '../types/types';
 
-const ProjectCard: React.FC = () => {
+const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   const { data: projects, isLoading, isError } = projectsApi.useGetUserProjectsQuery();
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
 
+    // component implementation
   return (
     <div>
       {projects?.map((project) => (
-        <div key={project.projects_id}>
+        <div key={project.project_id}>
           <h3 className="text-xl font-bold">{project.project_name}</h3>
           <p className="text-gray-600">{project.description}</p>
           <p><strong>GitHub Repo:</strong> 
