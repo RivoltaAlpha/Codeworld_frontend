@@ -73,4 +73,5 @@ export interface projectDetails {
 
 export interface ProjectsState {
   selectedProject: Project | null;
+  project: Project | null;
 }
