@@ -6,8 +6,9 @@ import { RootState } from '../app/store';
 import { setSelectedProject, clearSelectedProject } from '../features/projects/projectSlice';
 import { Project } from '../types/types';
 
+
 const UpdateProjectForm: React.FC = () => {
-  const { projectId }:any = useSelector((state: RootState) => state.project.selectedProject?.projects_id);
+  const { projectId }: number = useSelector((state: RootState) => state.project.selectedProject?.project_id);
   const { data: project, isLoading: isProjectLoading } = projectsApi.useGetProjectQuery(projectId);
   const [updateProject, { isLoading: isUpdating }] = projectsApi.useUpdateProjectMutation();
   const storedProject = localStorage.getItem('selectedProject');

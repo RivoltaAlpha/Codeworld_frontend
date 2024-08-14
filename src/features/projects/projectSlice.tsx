@@ -1,8 +1,5 @@
-// features/projects/projectsSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Project, ProjectsState } from '../../types/types';
-
-
 
 const initialState: ProjectsState = {
   selectedProject:  JSON.parse(localStorage.getItem('selectedProject') || 'null'),

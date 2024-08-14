@@ -12,7 +12,7 @@ import { Project } from '../types/types';
 const UserProjectsList: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user }: any = useSelector((state: RootState) => state.userAuth.user?.user_id && state.userAuth);
+  const { user } = useSelector((state: RootState) => state.userAuth.user?.user_id && state.userAuth);
   const userId = user?.user_id;
 
   const { data: projects, isLoading, isError } = projectsApi.useGetUserProjectsQuery(userId);
