@@ -1,13 +1,13 @@
 // features/projects/projectsAPI.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Project } from '../../types/types';
+import { Project  } from '../../types/types';
 
 export const projectsApi = createApi({
   reducerPath: 'projectsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000' }),
   tagTypes: ['Project'],
   endpoints: (builder) => ({
-    getUserProjects: builder.query<Project[], void>({
+    getUserProjects: builder.query<Project[], { user_id : number}>({
       query: ( user_id) => `/user-projects/${user_id}`,
       providesTags: ['Project'],
     }),

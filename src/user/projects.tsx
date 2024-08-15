@@ -7,15 +7,15 @@ import { RootState } from '../app/store';
 import projectsApi from '../features/projects/projectsAPI';
 import { setSelectedProject } from '../features/projects/projectSlice';
 import ProjectCard from '../components/projectCard';
-import { Project } from '../types/types';
+import { Project, TUser } from '../types/types';
 
 const UserProjectsList: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.userAuth.user?.user_id && state.userAuth);
+  const  user = useSelector((state: RootState) => state.userAuth.user) as TUser;
   const userId = user?.user_id;
 
-  const { data: projects, isLoading, isError } = projectsApi.useGetUserProjectsQuery(userId);
+  const { data: projects, isLoading, isError } = projectsApi.useGetUserProjectsQuery({user_id: userId});
   console.log(projects);
 
   const [deleteProject] = projectsApi.useDeleteProjectMutation();
