@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Task } from '../../types/types';
+import { ProjectTasks, Task } from '../../types/types';
 
 export const tasksAPI = createApi({
   reducerPath: 'tasksAPI',
@@ -25,24 +25,24 @@ export const tasksAPI = createApi({
       invalidatesTags: ['Tasks', 'Task'],
     }),
 
-    updateTask: builder.mutation<Task, { id: number; data: Partial<Task> }>({
-      query: ({ id, data }: { id: number; data: Partial<Task> }) => ({
-        url: `update-task/${id}`,
+    updateTask: builder.mutation<Task, { task_id: number; data: Partial<Task> }>({
+      query: ({ task_id, data }: { task_id: number; data: Partial<Task> }) => ({
+        url: `update-task/${task_id}`,
         method: 'PUT',
         body: data,
       }),
       invalidatesTags: ['Tasks'],
     }),
 
-    deleteTask: builder.mutation<{ success: boolean; id: number }, number>({
-      query: (id) => ({
-        url: `delete-task/${id}`,
+    deleteTask: builder.mutation<{ success: boolean; task_id: number }, number>({
+      query: (task_id) => ({
+        url: `delete-task/${task_id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Tasks'],
     }),
 
-    getTasksByProjectId: builder.query<Task[], number>({
+    getTasksByProjectId: builder.query<ProjectTasks[], number>({
       query: (projectId) => `tasks/project/${projectId}`,
       providesTags: ['Tasks'],
     }),
@@ -51,9 +51,9 @@ export const tasksAPI = createApi({
       query: (userId) => `tasks/user/${userId}`,
       providesTags: ['Tasks'],
     }),
-    updateTaskStatus: builder.mutation <Task, { id: number; data: Partial<Task> }>({
-      query: ({ id, data }: { id: number; data: Partial<Task> }) => ({
-        url: `update-task-status/${id}`,
+    updateTaskStatus: builder.mutation <Task, { task_id: number; data: Partial<Task> }>({
+      query: ({ task_id, data }: { task_id: number; data: Partial<Task> }) => ({
+        url: `update-task-status/${task_id}`,
         method: 'PUT',
         body: data,
       }),

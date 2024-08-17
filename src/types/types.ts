@@ -45,7 +45,7 @@ export interface UserAuthenticatedState {
 
   // types.ts
 export interface Task {
-  id: string;
+  task_id: string;
   title: string;
   status: string;
   completed: boolean;
@@ -69,6 +69,10 @@ export interface Project {
   project_status: 'todo' | 'in_progress' | 'completed';
   created_at: string;
   updated_at: string;
+}
+
+export interface ProjectTasks {
+  tasks: Task []
 }
 
 export interface projectDetails {
