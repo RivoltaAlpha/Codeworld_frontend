@@ -1,21 +1,28 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
-import { Project, Task } from '../types/types';
+import {  NavLink } from 'react-router-dom';
+import { Project, Task, TUser } from '../types/types';
 import tasksAPI from '../features/tasks/tasksAPI';
+import { clearSelectedProject } from '../features/projects/projectSlice';
 
 const ProjectDetails: React.FC = () => {
   const selectedProject = useSelector((state: RootState) => state.project.selectedProject) as Project;
+  const user = useSelector((state: RootState) => state.userAuth.user) as TUser;
+  const userId = user?.user_id;
+  console.log('Selected project', selectedProject)
   const project_id = selectedProject?.project_id;
   const { data } = tasksAPI.useGetTasksByProjectIdQuery(project_id);
   const tasks = data?.[0]?.tasks || []; //Access array 
+  const dispatch = useDispatch();
 
-  if (!selectedProject) {
-    return <div>No project selected.</div>;
-  }
+  
+    if (!selectedProject) {
+      return <div>No project selected.</div>;
+    }
 
   return (
-    <div className="space-y-4 p-4">
+    <div className="space-y-4 p-4 m-[100px]">
       <h2 className="text-2xl font-bold">{selectedProject.project_name}</h2>
       <p>{selectedProject.description}</p>
       <div className="flex space-x-2">
@@ -51,6 +58,9 @@ const ProjectDetails: React.FC = () => {
           </li>
         ))}
       </ul>
+      <NavLink to={`/dashboard/projects/${userId}`}>
+                <button className="px-4 py-2 bg-primary text-black rounded" onClick={() => dispatch(clearSelectedProject())}>Back</button>
+      </NavLink>
     </div>
   );
 };

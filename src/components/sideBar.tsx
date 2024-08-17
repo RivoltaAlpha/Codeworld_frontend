@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(clearUser());
-    navigate("/home");
+    navigate("/");
   };
   return (
     <div className="w-[200px] min-h-screen bg-cards p-4 space-y-4">
