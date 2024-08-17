@@ -11,9 +11,9 @@ export const projectsApi = createApi({
       query: ( user_id) => `/user-projects/${user_id}`,
       providesTags: ['Project'],
     }),
-    getProject: builder.query<Project, string>({
+    getProject: builder.query<Project, number>({
       query: (id) => `/projects/${id}`,
-      providesTags: (_result, _error, id) => [{ type: 'Project', id }],
+      providesTags: ['Project'],
     }),
     createProject: builder.mutation<Project, Partial<Project>>({
       query: (newProject) => ({
