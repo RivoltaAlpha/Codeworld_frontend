@@ -52,6 +52,11 @@ export interface Task {
   icon?: string;
 }
 
+export interface TasksState {
+  selectedTask: Task | null;
+  task: Task | null;
+}
+
 // types.ts
 export interface Project {
   project_id: number;

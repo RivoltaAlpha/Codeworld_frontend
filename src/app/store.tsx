@@ -10,6 +10,7 @@ import { projectsApi } from "../features/projects/projectsAPI"
 import UserAuthReducer from "../features/login/loginSlice";
 import userReducer from "../features/users/userSlice";
 import projectReducer from "../features/projects/projectSlice"
+import taskReducer from "../features/tasks/tasksSlice"
 import { tasksAPI } from "../features/tasks/tasksAPI";
 
 
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   userAuth: UserAuthReducer,
   user: userReducer,
   project: projectReducer,
+  task: taskReducer,
   // Add other reducers here
 });
 
