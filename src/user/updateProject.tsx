@@ -8,7 +8,8 @@ import { Project } from '../types/types';
 
 
 const UpdateProjectForm: React.FC = () => {
-  const { projectId }: number = useSelector((state: RootState) => state.project.selectedProject?.project_id);
+  const  selected  = useSelector((state: RootState) => state.project.selectedProject) as Project;
+  const projectId = selected?.project_id
   const { data: project, isLoading: isProjectLoading } = projectsApi.useGetProjectQuery(projectId);
   const [updateProject, { isLoading: isUpdating }] = projectsApi.useUpdateProjectMutation();
   const storedProject = localStorage.getItem('selectedProject');
@@ -22,6 +23,7 @@ const UpdateProjectForm: React.FC = () => {
   }, [dispatch]);
 
   const [formData, setFormData] = useState({
+    project_id: selected?.project_id,
     project_name: '',
     description: '',
     githubRepo: '' ,
