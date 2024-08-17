@@ -2,10 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { Project, Task } from '../types/types';
+import tasksAPI from '../features/tasks/tasksAPI';
 
 const ProjectDetails: React.FC = () => {
   const selectedProject = useSelector((state: RootState) => state.project.selectedProject) as Project;
-  const tasks: Task[] = useSelector((state: RootState) => state.tasksAPI.tasksList) as Task[];
+  const project_id = selectedProject?.project_id;
+  const { data } = tasksAPI.useGetTasksByProjectIdQuery(project_id);
+  const tasks = data?.[0]?.tasks || []; //Access array 
 
   if (!selectedProject) {
     return <div>No project selected.</div>;
@@ -38,8 +41,8 @@ const ProjectDetails: React.FC = () => {
 
       <h3 className="text-xl font-semibold mt-6">Tasks</h3>
       <ul className="space-y-2">
-        {tasks.map((task) => (
-          <li key={task.id} className="flex items-center space-x-2">
+        {Array.isArray(tasks) && tasks.map((task: Task) => (
+          <li key={task.task_id} className="flex items-center space-x-2">
             {task.icon && <img src={task.icon} alt={task.title} className="w-5 h-5" />}
             <span>{task.title}</span>
             <span className={`ml-auto ${task.completed ? 'text-green-500' : 'text-red-500'}`}>
