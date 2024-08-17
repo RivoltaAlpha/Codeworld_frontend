@@ -20,7 +20,7 @@ const TaskList: React.FC = () => {
       </div>
       <ul className="space-y-2">
         {tasks?.map((task) => (
-          <TaskItem key={task.id} task={task} />
+          <TaskItem key={task.task_id} task={task} />
         ))}
       </ul>
     </div>
