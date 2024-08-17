@@ -75,6 +75,19 @@ export interface ProjectTasks {
   tasks: Task []
 }
 
+export interface UseProjects {
+    project_id: number;
+    user_id: number;
+    project_name: string;
+    description: string;
+    githubRepo: string | null;
+    start_date: string | null;
+    end_date: string | null;
+    project_status: 'todo' | 'in_progress' | 'completed';
+    created_at: string;
+    updated_at: string;
+}
+
 export interface projectDetails {
   project : Project;
   tasks: Task;

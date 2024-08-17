@@ -11,12 +11,12 @@ function App() {
   return (
     <>
       <Router>
-      <div className="flex flex-col bg-gray-900">
+      <div className="flex flex-col text-white bg-gray-900">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/projects/:user_id" element={<UserProjectsList />} />
+          <Route path="/dashboard/projects/:user_id" element={<UserProjectsList />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>

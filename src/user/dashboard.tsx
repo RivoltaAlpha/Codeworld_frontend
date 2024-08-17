@@ -8,7 +8,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
      < Header />
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       <Sidebar />
       <div className="flex-1 p-6 space-y-6">
         <GraphSection />

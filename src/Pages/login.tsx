@@ -16,21 +16,21 @@ type LoginForm = {
 };
 
 export const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state: RootState) => state.userAuth);
+  const [loginUser, { isLoading }] = loginApi.useLoginMutation();
   const [user, setUser] = useState<LoginForm>({
     username: "",
     password: "",
     role: "user",
   });
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state: RootState) => state.userAuth);
-  const [loginUser, { isLoading }] = loginApi.useLoginMutation();
 
   useEffect(() => {
     if (isAuthenticated && user.role === "user") {
         navigate("/dashboard");
       }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, user.role]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
