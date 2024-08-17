@@ -62,7 +62,7 @@ const Main: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-1 gap-8 mt-10">
           <div className="flex flex-col md:flex-row items-center">
-            <img src="../public/team.png" alt="teamwork" className="w-full md:w-1/2" />
+            <img src="/team.png" alt="teamwork" className="w-full md:w-1/2" />
             <p className="mt-4 md:mt-0 md:ml-6">
               Collaboration is key. Work seamlessly with your team, share ideas, and track progress together with ease.
             </p>
@@ -71,10 +71,10 @@ const Main: React.FC = () => {
             <p className="mt-4 md:mt-0 md:mr-6 lg:order-first">
               Effective communication and collaboration tools to help your team stay connected and productive.
             </p>
-            <img src="../public/collaboration.png" alt="collaboration" className="w-full md:w-1/2 order-last md:order-first" />
+            <img src="/collaboration.png" alt="collaboration" className="w-full md:w-1/2 order-last md:order-first" />
           </div>
           <div className="flex flex-col md:flex-row items-center">
-            <img src="../public/programming.png" alt="tracking" className="w-full md:w-1/2" />
+            <img src="/programming.png" alt="tracking" className="w-full md:w-1/2" />
             <p className="mt-4 md:mt-0 md:ml-6">
               Keep track of your progress and milestones with our powerful tracking tools, ensuring you stay on target.
             </p>
@@ -83,7 +83,7 @@ const Main: React.FC = () => {
             <p className="mt-4 md:mt-0 md:mr-6 lg:order-first ">
               Manage your resources effectively, assign tasks, and monitor progress to optimize your workflow.
             </p>
-            <img src="../public/tasks.png" alt="tasks" className="w-full bg-gray-900 md:w-1/2 order-last md:order-first" />
+            <img src="/tasks.png" alt="tasks" className="w-full bg-gray-900 md:w-1/2 order-last md:order-first" />
           </div>
         </div>
       </div>
