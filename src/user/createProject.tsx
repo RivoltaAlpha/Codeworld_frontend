@@ -1,10 +1,10 @@
-// components/CreateProjectForm.tsx
 import React, { useState } from 'react';
 import projectsApi from '../features/projects/projectsAPI';
 import { RootState } from '../app/store';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, Toaster } from 'sonner';
+import { Project } from '../types/types';
 
 const CreateProjectForm: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.userAuth);
@@ -18,7 +18,7 @@ const CreateProjectForm: React.FC = () => {
     start_date: '',
     end_date: '',
     project_status: 'todo',
-  } as any);
+  } as Project);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -69,7 +69,7 @@ const CreateProjectForm: React.FC = () => {
       <input
         type="text"
         name="githubRepo"
-        value={formData.githubRepo}
+        value={formData.githubRepo ?? ''} 
         onChange={handleChange}
         placeholder="GitHub Repo URL"
         className="w-full p-2 border rounded"
@@ -77,14 +77,14 @@ const CreateProjectForm: React.FC = () => {
       <input
         type="date"
         name="start_date"
-        value={formData.start_date}
+        value={formData.start_date ?? ''}
         onChange={handleChange}
         className="w-full p-2 border rounded"
       />
       <input
         type="date"
         name="end_date"
-        value={formData.end_date}
+        value={formData.end_date ?? ''}
         onChange={handleChange}
         className="w-full p-2 border rounded"
       />
