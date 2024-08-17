@@ -21,6 +21,7 @@ const persistConfig = {
     usersAPI.reducerPath,
     registrationAPI.reducerPath,
     loginApi.reducerPath,
+    projectsApi.reducerPath,
   ],
   whitelist: [loginApi.reducerPath],
 };

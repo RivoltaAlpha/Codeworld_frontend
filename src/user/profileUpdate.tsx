@@ -53,6 +53,7 @@ export  const ProfileEditPage = () => {
                             src={formData.image_url}
                             alt="User Profile" 
                             className="w-32 h-32 rouunded-full object-cover"
+    
                             // onClick={() => {
                             //   console.log('Image clicked');
                             //   // Add your image click handler here  
