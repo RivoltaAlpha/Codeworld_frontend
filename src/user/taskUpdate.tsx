@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import tasksApi from '../features/tasks/tasksAPI';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store';
+import { Task } from '../types/types';
 
 const UpdateTask: React.FC = () => {
-    const { taskId } = useParams<{ taskId: any }>();
+    const tasktbu = useSelector((state: RootState) => state.task.selectedTask) as Task
+    const  taskId  = parseInt(tasktbu?.task_id);
     const { data: task, isLoading: isTaskLoading } = tasksApi.useGetTaskQuery(taskId);
     const [updateTask, { isLoading: isUpdating }] = tasksApi.useUpdateTaskMutation();
 
@@ -24,7 +27,8 @@ const UpdateTask: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await updateTask({ id: taskId, title, status }).unwrap();
+            const data = { title, status};
+            await updateTask({ task_id: taskId, data }).unwrap();
             // Optionally, redirect to task list or show success message
         } catch (error) {
             console.error('Failed to update task:', error);
