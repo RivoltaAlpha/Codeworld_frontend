@@ -1,10 +1,15 @@
 import React from 'react';
 import projectsApi from '../features/projects/projectsAPI';
-import { Project } from '../types/types';
+import { Project, TUser } from '../types/types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store';
 
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
-  const { data: projects, isLoading, isError } = projectsApi.useGetUserProjectsQuery();
+const ProjectCard: React.FC<{ project: Project }> = () => {
 
+  const  user = useSelector((state: RootState) => state.userAuth.user) as TUser;
+  const userId = user?.user_id;
+
+  const { data: projects, isLoading, isError } = projectsApi.useGetUserProjectsQuery({user_id: userId});
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
 
