@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import {  NavLink } from 'react-router-dom';
-import { Project, Task, TUser } from '../types/types';
+import { Project,  TUser } from '../types/types';
 import tasksAPI from '../features/tasks/tasksAPI';
 import { clearSelectedProject } from '../features/projects/projectSlice';
 
@@ -10,10 +10,11 @@ const ProjectDetails: React.FC = () => {
   const selectedProject = useSelector((state: RootState) => state.project.selectedProject) as Project;
   const user = useSelector((state: RootState) => state.userAuth.user) as TUser;
   const userId = user?.user_id;
+
   console.log('Selected project', selectedProject)
-  const project_id = selectedProject?.project_id;
-  const { data } = tasksAPI.useGetTasksByProjectIdQuery(project_id);
-  const tasks = data?.[0]?.tasks || []; //Access array 
+  const project_id = selectedProject?.projects_id;
+  const { data: tasks } = tasksAPI.useGetTasksByProjectIdQuery(project_id);
+  console.log('Task data:', tasks);
   const dispatch = useDispatch();
 
   
@@ -22,7 +23,7 @@ const ProjectDetails: React.FC = () => {
     }
 
   return (
-    <div className="space-y-4 p-4 m-[100px]">
+    <div className="space-y-4 p-4 m-[50px]">
       <h2 className="text-2xl font-bold">{selectedProject.project_name}</h2>
       <p>{selectedProject.description}</p>
       <div className="flex space-x-2">
@@ -46,21 +47,26 @@ const ProjectDetails: React.FC = () => {
         </div>
       )}
 
+      <ul className="space-y-2 mb-6 p-4 gap-6">
       <h3 className="text-xl font-semibold mt-6">Tasks</h3>
-      <ul className="space-y-2">
-        {Array.isArray(tasks) && tasks.map((task: Task) => (
-          <li key={task.task_id} className="flex items-center space-x-2">
-            {task.icon && <img src={task.icon} alt={task.title} className="w-5 h-5" />}
-            <span>{task.title}</span>
+        {tasks?.map((task) => (
+          <li key={task.task_id} className="flex flex-col bg-gray-800 p-4 rounded  items-center space-x-2">
+            <span>Task Name: {task.task_name}</span>
+            <span>About: {task.description}</span>
             <span className={`ml-auto ${task.completed ? 'text-green-500' : 'text-red-500'}`}>
-              {task.status}
+              Status: {task.task_status}
             </span>
           </li>
         ))}
       </ul>
+      <div className='flex justify-between'>
       <NavLink to={`/dashboard/projects/${userId}`}>
                 <button className="px-4 py-2 bg-primary text-black rounded" onClick={() => dispatch(clearSelectedProject())}>Back</button>
       </NavLink>
+      <NavLink to={`/dashboard/projects/${userId}`}>
+                <button className="px-4 py-2 bg-primary text-black rounded" onClick={() => dispatch(clearSelectedProject())}>New Task</button>
+      </NavLink>
+      </div>
     </div>
   );
 };
