@@ -45,9 +45,12 @@ export interface UserAuthenticatedState {
 
   // types.ts
 export interface Task {
-  task_id: string;
-  title: string;
-  status: string;
+  task_id: number;
+  task_name: string;
+  description: string;
+  task_status: string;
+  start_date: string | null;
+  end_date: string | null;
   completed: boolean;
   icon?: string;
 }
@@ -59,7 +62,7 @@ export interface TasksState {
 
 // types.ts
 export interface Project {
-  project_id: number;
+  projects_id: number;
   user_id: number;
   project_name: string;
   description: string;
@@ -72,11 +75,15 @@ export interface Project {
 }
 
 export interface ProjectTasks {
-  tasks: Task []
+  task_id: string;
+  task_name: string;
+  task_status: string;
+  description: string;
+  completed: boolean;
 }
 
 export interface UseProjects {
-    project_id: number;
+  projects_id: number;
     user_id: number;
     project_name: string;
     description: string;
