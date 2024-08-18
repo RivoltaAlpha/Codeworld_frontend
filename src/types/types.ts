@@ -50,7 +50,7 @@ export interface Task {
   description: string;
   task_status: string;
   start_date: string | null;
-  end_date: string | null;
+  due_date: string | null;
   completed: boolean;
   icon?: string;
 }
