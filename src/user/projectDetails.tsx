@@ -60,10 +60,10 @@ const ProjectDetails: React.FC = () => {
         ))}
       </ul>
       <div className='flex justify-between'>
-      <NavLink to={`/dashboard/projects/${userId}`}>
+      <NavLink to={`/projects/${userId}`}>
                 <button className="px-4 py-2 bg-primary text-black rounded" onClick={() => dispatch(clearSelectedProject())}>Back</button>
       </NavLink>
-      <NavLink to={`/dashboard/projects/${userId}`}>
+      <NavLink to={`/projects/${userId}`}>
                 <button className="px-4 py-2 bg-primary text-black rounded" onClick={() => dispatch(clearSelectedProject())}>New Task</button>
       </NavLink>
       </div>

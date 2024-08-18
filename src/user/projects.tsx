@@ -31,7 +31,7 @@ const UserProjectsList: React.FC = () => {
   const handleViewDetails = (project: Project) => {
     if (project.projects_id) {
       dispatch(setSelectedProject(project));
-      navigate(`/dashboard/project-details/${project.projects_id}`);
+      navigate(`/project-details/${project.projects_id}`);
       console.log('Project ID:', project.projects_id);
     } else {
       toast.error('Project ID not found');
@@ -55,7 +55,6 @@ const UserProjectsList: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
           {projects?.map((project, index) => (
             <div key={project?.projects_id || index} className="bg-secondary text-white p-6 rounded-lg transition transform hover:scale-105 duration-300 ease-in-out">
-              <h3 className="text-xl font-semibold mb-4">Project ID:{project?.projects_id}</h3>
               <h3 className="text-xl font-semibold mb-4">{project?.project_name}</h3>
               <p className="text mb-4"><strong>Description :</strong> {project.description}</p>
               <p className="text-sm mb-2">
@@ -69,7 +68,7 @@ const UserProjectsList: React.FC = () => {
                 <NavLink
                   className="bg-primary text-black py-2 px-4 rounded hover:bg-teal-600 transition duration-300"
                   onClick={() => handleViewDetails(project)}
-                  to={`/dashboard/project-details/${project?.projects_id}`}>
+                  to={`/project-details/${project?.projects_id}`}>
                   View Details
                 </NavLink>
                 <button

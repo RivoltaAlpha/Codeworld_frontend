@@ -59,7 +59,7 @@ const UserTasksList: React.FC = () => {
               <h3 className="text-xl font-semibold mb-4">{task.task_name}</h3>
               <p className="text mb-4"><strong>Description :</strong> {task.description}</p>
               <p className="text-sm mb-2"><strong>Start Date:</strong> {task.start_date}</p>
-              <p className="text-sm mb-2"><strong>End Date:</strong> {task.end_date}</p>
+              <p className="text-sm mb-2"><strong>End Date:</strong> {task.due_date}</p>
               <p className="text-sm mb-2"><strong>Status:</strong> {task.task_status}</p>
 
               <div className="mt-4 flex justify-between items-center">
