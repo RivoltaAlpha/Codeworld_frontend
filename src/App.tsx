@@ -22,14 +22,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard/projects/:user_id" element={<UserProjectsList />} />
-          <Route path="/dashboard/project-details/:project_id" element={<ProjectDetails />} />
-          <Route path='/dashboard/create-project' element={<CreateProjectForm />}/>
-          <Route path='/dashboard/create-task' element={<CreateTask />}/>
-          <Route path='/dashboard/user-tasks/:user_id' element={<UserTasksList />}/>
-          <Route path='/dashboard/project-tasks/:project_id' element={<TaskList />}/>
-          <Route path='/dashboard/profile' element={<Profile />}/>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/projects/:user_id" element={<UserProjectsList />} />
+          <Route path="/project-details/:project_id" element={<ProjectDetails />} />
+          <Route path='/create-project' element={<CreateProjectForm />}/>
+          <Route path='/create-task' element={<CreateTask />}/>
+          <Route path='/user-tasks/:user_id' element={<UserTasksList />}/>
+          <Route path='/project-tasks/:project_id' element={<TaskList />}/>
+          <Route path='/profile' element={<Profile />}/>
         </Routes>
       </div>
       </Router>
