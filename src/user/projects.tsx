@@ -12,6 +12,7 @@ import { Project, TUser } from '../types/types';
 const UserProjectsList: React.FC = () => {
   const user = useSelector((state: RootState) => state.userAuth.user) as TUser;
   const userId = user?.user_id;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,10 +29,13 @@ const UserProjectsList: React.FC = () => {
   };
 
   const handleViewDetails = (project: Project) => {
-    dispatch(setSelectedProject(project));
-    localStorage.setItem('selectedProject', JSON.stringify(project));
-    navigate(`/dashboard/project-details/${project.project_id}`);
-    console.log('Project ID:', project.project_id);
+    if (project.projects_id) {
+      dispatch(setSelectedProject(project));
+      navigate(`/dashboard/project-details/${project.projects_id}`);
+      console.log('Project ID:', project.projects_id);
+    } else {
+      toast.error('Project ID not found');
+    }
   };
 
   return (
@@ -48,11 +52,11 @@ const UserProjectsList: React.FC = () => {
 
         {isError && <div className="text-red-500 text-lg">Error loading projects</div>}
 
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-          {projects?.map((project) => (
-            <div key={project.project_id} className="bg-secondary text-white p-6 rounded-lg transition transform hover:scale-105 duration-300 ease-in-out">
-              <h3 className="text-xl font-semibold mb-4">{project.project_name}</h3>
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
+          {projects?.map((project, index) => (
+            <div key={project?.projects_id || index} className="bg-secondary text-white p-6 rounded-lg transition transform hover:scale-105 duration-300 ease-in-out">
+              <h3 className="text-xl font-semibold mb-4">Project ID:{project?.projects_id}</h3>
+              <h3 className="text-xl font-semibold mb-4">{project?.project_name}</h3>
               <p className="text mb-4"><strong>Description :</strong> {project.description}</p>
               <p className="text-sm mb-2">
                 <strong>GitHub Repo:</strong> <a href={project.githubRepo ?? ''} className="text-blue-500 hover:underline">{project.githubRepo}</a>
@@ -65,12 +69,12 @@ const UserProjectsList: React.FC = () => {
                 <NavLink
                   className="bg-primary text-black py-2 px-4 rounded hover:bg-teal-600 transition duration-300"
                   onClick={() => handleViewDetails(project)}
-                  to={`/dashboard/project-details/${project?.project_id}`}>
+                  to={`/dashboard/project-details/${project?.projects_id}`}>
                   View Details
                 </NavLink>
                 <button
                   className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-300"
-                  onClick={() => handleDelete(project?.project_id)}>
+                  onClick={() => handleDelete(project.projects_id)}>
                   Delete
                 </button>
               </div>
