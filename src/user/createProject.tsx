@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, Toaster } from 'sonner';
 import { Project } from '../types/types';
+import Sidebar from '../components/sideBar';
 
 const CreateProjectForm: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.userAuth);
@@ -36,7 +37,9 @@ const CreateProjectForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-6 text-white tecy shadow-lg rounded-lg">
+    <div className="flex min-h-screen bg-gray-900">
+      <Sidebar />
+    <div className="max-w-2xl mx-auto mt-10 p-6 text-black tecy shadow-lg rounded-lg">
     <Toaster
         toastOptions={{
           classNames: {
@@ -48,7 +51,7 @@ const CreateProjectForm: React.FC = () => {
         }}
       />
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold">Create New Project</h2>
+      <h2 className="text-2xl text-white font-bold">Create New Project</h2>
       <input
         type="text"
         name="project_name"
@@ -106,6 +109,7 @@ const CreateProjectForm: React.FC = () => {
         {isLoading ? 'Creating...' : 'Create Project'}
       </button>
     </form>
+  </div>
   </div>
   );
 };
