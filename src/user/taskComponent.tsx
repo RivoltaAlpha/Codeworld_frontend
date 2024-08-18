@@ -14,9 +14,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         className="form-checkbox h-5 w-5 text-blue-600"
       />
       <span className={task.completed ? 'line-through text-gray-500' : ''}>
-        {task.title}
+        {task.task_name}
       </span>
-      {task.icon && <span>{task.icon}</span>}
       <div className="ml-auto flex space-x-2">
         <button className="text-gray-600">Edit</button>
         <button className="text-gray-600">Calendar</button>

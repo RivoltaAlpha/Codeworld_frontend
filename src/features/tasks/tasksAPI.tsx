@@ -43,12 +43,12 @@ export const tasksAPI = createApi({
     }),
 
     getTasksByProjectId: builder.query<ProjectTasks[], number>({
-      query: (projectId) => `tasks/project/${projectId}`,
+      query: (projectId) => `/tasks-project/${projectId}`,
       providesTags: ['Tasks'],
     }),
 
     getTasksByUserId: builder.query<Task[], number>({
-      query: (userId) => `tasks/user/${userId}`,
+      query: (userId) => `/user-tasks/${userId}`,
       providesTags: ['Tasks'],
     }),
     updateTaskStatus: builder.mutation <Task, { task_id: number; data: Partial<Task> }>({
