@@ -18,7 +18,7 @@ const CreateProjectForm: React.FC = () => {
     githubRepo: '',
     start_date: '',
     end_date: '',
-    project_status: 'todo',
+    project_status: 'Todo',
   } as Project);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -30,7 +30,7 @@ const CreateProjectForm: React.FC = () => {
     try {
       await createProject(formData).unwrap();
       toast.success('Booking successful');
-      navigate('/users/dashboard');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Failed to create project:', error);
     }
@@ -97,9 +97,9 @@ const CreateProjectForm: React.FC = () => {
         onChange={handleChange}
         className="w-full p-2 border rounded"
       >
-        <option value="todo">To Do</option>
-        <option value="in_progress">In Progress</option>
-        <option value="completed">Completed</option>
+        <option value="Todo">To Do</option>
+        <option value="InProgress">In Progress</option>
+        <option value="Done">Completed</option>
       </select>
       <button
         type="submit"

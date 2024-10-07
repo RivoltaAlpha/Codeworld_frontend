@@ -69,7 +69,7 @@ export interface Project {
   githubRepo: string | null;
   start_date: string | null;
   end_date: string | null;
-  project_status: 'todo' | 'in_progress' | 'completed';
+  project_status: 'Todo' | 'InProgress' | 'Done';
   created_at: string;
   updated_at: string;
 }
