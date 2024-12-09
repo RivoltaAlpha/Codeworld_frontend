@@ -32,14 +32,14 @@ const ProjectCard: React.FC<{ project: Project }> = () => {
   const handleViewDetails = (project: Project) => {
     dispatch(setSelectedProject(project));
     localStorage.setItem('selectedProject', JSON.stringify(project));
-    navigate(`/users/project-details/${project.project_id}`);
+    navigate(`/users/project-details/${project.projects_id}`);
   };
 
   return (
     <div className="p-6 space-y-6">
       {projects?.map((project) => (
         <div
-          key={project.project_id}
+          key={project.projects_id}
           className="bg-primary shadow-lg rounded-lg p-6 transition transform hover:scale-105 duration-300 ease-in-out"
         >
           <h3 className="text-2xl font-semibold text-gray-900 mb-3">
@@ -72,7 +72,7 @@ const ProjectCard: React.FC<{ project: Project }> = () => {
             <NavLink
               className="bg-secondary text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300"
               onClick={() => handleViewDetails(project)}
-              to={`/users/project-details/${project?.project_id}`}
+              to={`/users/project-details/${project?.projects_id}`}
             >
               View Details
             </NavLink>
