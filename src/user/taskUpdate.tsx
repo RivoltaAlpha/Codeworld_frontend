@@ -6,7 +6,7 @@ import { Task } from '../types/types';
 
 const UpdateTask: React.FC = () => {
     const tasktbu = useSelector((state: RootState) => state.task.selectedTask) as Task
-    const  taskId  = parseInt(tasktbu?.task_id);
+    const taskId = tasktbu?.task_id;
     const { data: task, isLoading: isTaskLoading } = tasksApi.useGetTaskQuery(taskId);
     const [updateTask, { isLoading: isUpdating }] = tasksApi.useUpdateTaskMutation();
 
@@ -15,8 +15,8 @@ const UpdateTask: React.FC = () => {
 
     useEffect(() => {
         if (task) {
-            setTitle(task.title);
-            setStatus(task.status);
+            setTitle(task.task_name);
+            setStatus(task.task_status);
         }
     }, [task]);
 
@@ -27,7 +27,7 @@ const UpdateTask: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const data = { title, status};
+            const data = { task_name: title, task_status: status };
             await updateTask({ task_id: taskId, data }).unwrap();
             // Optionally, redirect to task list or show success message
         } catch (error) {

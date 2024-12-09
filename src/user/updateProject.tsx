@@ -9,7 +9,7 @@ import { Project } from '../types/types';
 
 const UpdateProjectForm: React.FC = () => {
   const  selected  = useSelector((state: RootState) => state.project.selectedProject) as Project;
-  const projectId = selected?.project_id
+  const projectId = selected?.projects_id
   const { data: project, isLoading: isProjectLoading } = projectsApi.useGetProjectQuery(projectId);
   const [updateProject, { isLoading: isUpdating }] = projectsApi.useUpdateProjectMutation();
   const storedProject = localStorage.getItem('selectedProject');
@@ -23,13 +23,13 @@ const UpdateProjectForm: React.FC = () => {
   }, [dispatch]);
 
   const [formData, setFormData] = useState({
-    project_id: selected?.project_id,
+    project_id: selected?.projects_id,
     project_name: '',
     description: '',
     githubRepo: '' ,
     start_date: '',
     end_date: '' ,
-    project_status: 'todo' || 'in_progress' || 'completed',
+    project_status: 'Todo',
   });
 
 
@@ -47,7 +47,7 @@ const UpdateProjectForm: React.FC = () => {
       const ProjectUpdate = JSON.parse(storedProject || '{}');
       const data: Partial<Project> = {
         ...formData,
-        project_status: formData.project_status as "completed" | "todo" | "in_progress",
+        project_status: formData.project_status as 'Todo' | 'InProgress' | 'Done',
       };
       await updateProject({ projects_id: ProjectUpdate.projects_id, data }).unwrap();
       console.log('API response:', project);
